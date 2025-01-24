@@ -2,7 +2,8 @@ import { View, Text } from "react-native";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
 import { useNavigation } from "@react-navigation/native";
-import VideoPlayer from "../components/VideoPlayer";
+import YoutubePlayer from "react-native-youtube-iframe";
+import Button from "../components/UI/Button";
 
 
 export default function VideoScreen({ route }) {
@@ -25,22 +26,32 @@ export default function VideoScreen({ route }) {
     );
   }
 
-  console.log(video);
   return (
-    <View
-      className="flex-1"
-      style={{ backgroundColor: colors.secondary }}
-    >
-      <Text className="text-2xl font-bold my-6 mx-2" style={{ color: colors.text }}>
+    <View className="flex-1" style={{ backgroundColor: colors.secondary }}>
+      <Text
+        className="text-2xl font-bold my-6 mx-2"
+        style={{ color: colors.text }}
+      >
         {title}
       </Text>
-      <VideoPlayer videoId={videoId} />
+      <View className="h-80 w-full">
+        <YoutubePlayer
+          height={400}
+          videoId={videoId}
+        />
+      </View>
       <Text className="text-lg font-bold mb-4" style={{ color: colors.text }}>
         Description
       </Text>
       <Text className="text-sm mb-4" style={{ color: colors.text }}>
         {description}
       </Text>
+      <Button
+        className="my-6 mx-5"
+        title="Back to the Home Screen"
+        onPress={() => navigation.navigate('Home')}
+        variant="secondary"
+      />
     </View>
   );
 }

@@ -3,6 +3,7 @@ import { ThemeContext } from "../../contexts/themeContext";
 import { useContext } from "react";
 
 export default function Button({
+  className,
   title,
   onPress,
   variant = "primary",
@@ -25,11 +26,12 @@ export default function Button({
 
   return (
     <TouchableOpacity
+
       onPress={onPress}
       disabled={disabled}
       className={`px-4 py-2 rounded-lg bg-${getBackgroundColor()} ${
         disabled ? "opacity-50" : ""
-      } border border-${getBackgroundColor()} rounded-lg`}
+      } border border-${getBackgroundColor()} rounded-lg ${className}`}
     >
       <Text className="font-bold text-center" style={{ color: colors.text }}>
         {title}

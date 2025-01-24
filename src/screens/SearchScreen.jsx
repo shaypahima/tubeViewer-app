@@ -7,6 +7,7 @@ import { useState, useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
 import Button from "../components/UI/Button";
 
+
 export default function SearchScreen() {
   const [keyword, setKeyword] = useState("");
   const { colors } = useContext(ThemeContext);
@@ -69,7 +70,7 @@ export default function SearchScreen() {
           contentContainerStyle={{ paddingTop: 10 }}
           keyExtractor={(item) => item.videoId}
           data={data}
-          renderItem={({ item }) => <VideoItem video={item} />}
+          renderItem={({ item }) => <VideoItem video={item} addToRecentVideos={true} />}
         />
       )}
     </View>

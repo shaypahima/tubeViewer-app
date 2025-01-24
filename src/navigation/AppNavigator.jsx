@@ -24,7 +24,7 @@ export default function AppNavigator() {
           headerTintColor: colors.text,
           headerRight: () => (
             <Button
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`${theme === 'light' ? 'dark' : 'light'} mode`}
               onPress={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}
               color={colors.primary}
             />
@@ -40,7 +40,7 @@ export default function AppNavigator() {
           headerTintColor: colors.text,
           headerRight: () => (
             <Button
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`${theme === 'light' ? 'dark' : 'light'} mode`}
               onPress={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}
               color={colors.primary}
             />
@@ -56,7 +56,7 @@ export default function AppNavigator() {
           headerTintColor: colors.text,
           headerRight: () => (
             <Button
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`${theme === 'light' ? 'dark' : 'light'} mode`}
               onPress={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}
               color={colors.primary}
             />

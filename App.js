@@ -4,6 +4,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from './src/contexts/themeContext';
+import { VideosProvider } from './src/contexts/videosContext';
 // Create a client
 const queryClient = new QueryClient();
 
@@ -14,11 +15,13 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <ThemeProvider>
-        <SafeAreaView className="flex-1">
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-        </SafeAreaView>
+          <VideosProvider>
+            <SafeAreaView className="flex-1">
+              <NavigationContainer>
+                <AppNavigator />
+              </NavigationContainer>
+            </SafeAreaView>
+          </VideosProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
