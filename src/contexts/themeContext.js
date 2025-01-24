@@ -6,10 +6,11 @@ import { colorPalettes } from "../constants/colorPalette";
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const systemTheme = useColorScheme();
-  const [theme, setTheme] = useState(systemTheme || "light");
+  const systemTheme = useColorScheme(); // get the system theme
+  const [theme, setTheme] = useState(systemTheme || "light"); // set the theme to the system theme or light if not available
 
   useEffect(() => {
+    // load the theme from the async storage
     const loadTheme = async () => {
       const storedTheme = await AsyncStorage.getItem("theme");
       if (storedTheme) {
@@ -20,6 +21,7 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = async (newTheme) => {
+    // toggle the theme and save it to the async storage
     setTheme(newTheme);
     await AsyncStorage.setItem("theme", newTheme);
   };

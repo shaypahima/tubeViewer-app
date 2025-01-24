@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { ThemeContext } from '../contexts/themeContext';
 import { Button } from 'react-native';
 
+
+//
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {

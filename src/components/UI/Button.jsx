@@ -1,21 +1,39 @@
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from "react-native";
+import { ThemeContext } from "../../contexts/themeContext";
+import { useContext } from "react";
 
 export default function Button({
-   title, onPress, variant = 'primary', disabled = false 
-  }) {
-  const buttonStyles = `px-4 py-2 rounded-lg ${
-    variant === 'primary'
-      ? 'bg-blue-500' 
-      : variant === 'secondary'
-      ? 'bg-gray-500'
-      : 'bg-green-500'
-  } ${disabled ? 'opacity-50' : ''}`;
-  const textStyles = 'text-white font-bold text-center';
+  title,
+  onPress,
+  variant = "primary",
+  disabled = false,
+}) {
+  const { colors } = useContext(ThemeContext);
 
+  // get the background color based on the variant
+  const getBackgroundColor = () => {
+    if (disabled) return colors.secondary;
+    switch (variant) {
+      case "primary":
+        return colors.primary;
+      case "secondary":
+        return colors.secondary;
+      default:
+        return colors.accent;
+    }
+  };
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={disabled} className={buttonStyles}>
-      <Text style={textStyles}>{title}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      className={`px-4 py-2 rounded-lg bg-${getBackgroundColor()} ${
+        disabled ? "opacity-50" : ""
+      } border border-${getBackgroundColor()} rounded-lg`}
+    >
+      <Text className="font-bold text-center" style={{ color: colors.text }}>
+        {title}
+      </Text>
     </TouchableOpacity>
-  )
+  );
 }

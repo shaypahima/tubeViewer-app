@@ -4,12 +4,15 @@ import { useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
 
 export default function VideoItem({ video }) {
-  const navigation = useNavigation();
-  const { title, thumbnail } = video;
   const { colors } = useContext(ThemeContext);
+  const { title, thumbnail } = video;
+
+  const navigation = useNavigation();
+
+
 
   const handlePress = () => {
-    //TODO: Navigate to the video player screen
+    navigation.navigate('Video', { video });
   };
 
   return (

@@ -4,7 +4,7 @@ import { config } from '../../config';
 
 export const fetchYouTubeVideos = async (keyword) => {
   try {
-    console.log(config.BASE_URL)
+    // fetch the videos from the youtube api
     const response = await axios.get(config.BASE_URL, {
       params: {
         key: config.API_KEY,
