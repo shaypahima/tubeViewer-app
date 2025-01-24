@@ -3,46 +3,49 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { fetchYouTubeVideos } from '../services/fetchVideos';
 import VideoItem from '../components/VideoItem';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ThemeContext } from '../contexts/themeContext';
 
 export default function SearchScreen() {
   const [keyword, setKeyword] = useState('');
   const [videos, setVideos] = useState([]);
+
+  const { colors } = useContext(ThemeContext);
 
   // Fetch videos from YouTube API
   const { data, isLoading, error } = useQuery({
     queryKey: ['youtube-videos', keyword],
     queryFn: () => fetchYouTubeVideos(keyword),
     enabled: !!keyword
-  })
-
-  
-  const handleSearch = async () => {
-    const fetchedVideos = await fetchYouTubeVideos(keyword);
-    setVideos(fetchedVideos);
-  }
+  });
 
 
   return (
-    <View className="flex-1 p-4 bg-gray-100">
-      <Text>SearchScreen</Text>
+    <View className="flex-1 p-4" style={{ backgroundColor: colors.background }}>
+      <Text style={{ color: colors.text }}>SearchScreen</Text>
       <TextInput
-        className="bg-white p-3 rounded-md border border-gray-300 shadow-sm text-gray-800"
+        className="p-3 rounded-md border shadow-sm"
+        style={{
+          backgroundColor: colors.background,
+          borderColor: colors.secondary,
+          color: colors.text,
+        }}
         value={keyword}
         onChangeText={setKeyword}
         placeholder="Search videos..."
+        placeholderTextColor={colors.secondary}
       />
-      {isLoading && <Text>Loading...</Text>}
-      {error && <Text>Error: {error.message}</Text>}
-      {data && <FlatList
-        className="flex-1"
-        contentContainerStyle={{ paddingTop: 10 }}
-        keyExtractor={(item) => item.videoId}
-        data={data}
-        renderItem={({ item }) => (
-          <VideoItem video={item} />
-        )}
-      />}
+      {isLoading && <Text style={{ color: colors.text }}>Loading...</Text>}
+      {error && <Text style={{ color: colors.text }}>Error: {error.message}</Text>}
+      {data && (
+        <FlatList
+          className='flex-1'
+          contentContainerStyle={{ paddingTop: 10 }}
+          keyExtractor={(item) => item.videoId}
+          data={data}
+          renderItem={({ item }) => <VideoItem video={item} />}
+        />
+      )}
     </View>
-  )
+  );
 }
