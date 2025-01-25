@@ -5,10 +5,11 @@ import { ThemeContext } from "../contexts/themeContext";
 import { VideosContext } from "../contexts/videosContext";
 
 
+
 export default function VideoItem({ video, addToRecentVideos = false }) {
   const { colors } = useContext(ThemeContext);
   // add the video to the recent videos list
-  const { addVideo } = useContext(VideosContext);
+  const { addVideo, deleteVideo } = useContext(VideosContext);
   // get the title and thumbnail of the video
   const { title, thumbnail } = video;
 
@@ -23,10 +24,9 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
   };
 
   return (
-    <TouchableOpacity
+    <TouchableOpacity 
       className="flex-row items-center space-x-4 p-4 border-b "
       style={{
-        borderBottomColor: colors.secondary,
         backgroundColor: colors.secondary,
       }}
       onPress={handlePress}
@@ -35,6 +35,9 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
         className="w-16 h-16 rounded"
         resizeMode="cover"
         source={{ uri: thumbnail }}
+        style={{
+          backgroundColor: colors.secondary,
+        }}
       />
       <Text
         className="ml-4 text-lg font-medium"

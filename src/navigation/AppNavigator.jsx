@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
 import ThemeSwitch from "../components/ThemeSwitch";
 
-
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {

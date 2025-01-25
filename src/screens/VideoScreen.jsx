@@ -50,7 +50,7 @@ export default function VideoScreen({ route }) {
       <Button
         className="my-6 mx-5"
         title="Back to the Home Screen"
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.popTo('Home')}
         variant="secondary"
       />
     </View>

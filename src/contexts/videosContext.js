@@ -35,6 +35,7 @@ export const VideosProvider = ({ children }) => {
     saveRecentVideos();
   }, [recentVideos]);
 
+  // add a video to the recent videos
   const addVideo = (video) => {
     setRecentVideos((prevVideos) => {
       const updatedVideos = [video, ...prevVideos];
@@ -42,6 +43,19 @@ export const VideosProvider = ({ children }) => {
     });
   };
 
-  return <VideosContext.Provider value={{ recentVideos, addVideo }}>{children}</VideosContext.Provider>;
+  // delete all videos
+  const deleteAllVideos = () => {
+    setRecentVideos([]);
+  };
+
+  // delete a video
+  const deleteVideo = (videoId) => {
+    setRecentVideos((prevVideos) => {
+      const updatedVideos = prevVideos.filter((video) => video.id !== videoId);
+      return updatedVideos
+    });
+  };
+
+  return <VideosContext.Provider value={{ recentVideos, addVideo, deleteAllVideos, deleteVideo }}>{children}</VideosContext.Provider>;
 };
 
