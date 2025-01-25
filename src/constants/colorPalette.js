@@ -1,18 +1,16 @@
 export const colorPalettes = {
   light: {
-    text: '#020d08',
-    background: '#edfdf9',
-    primary: '#2ce2a6',
-    secondary: '#8ab9ef',
-    accent: '#5d72e9',
-    tint: '#f2fdf8',
+    text: '#191011',
+    background: '#f3e2e5',
+    primary: '#751f32',
+    secondary: '#e96d88',
+    accent: '#f40b3e',
   },
   dark: {
-    text: '#f2fdf8',
-    background: '#02120e',
-    primary: '#1dd396',
-    secondary: '#103f75',
-    accent: '#162ba2',
-    tint: '#020d08',
+    text: '#efe5e7',
+    background: '#1c0c0f',
+    primary: '#e08a9d',
+    secondary: '#931632',
+    accent: '#f40b3f',
   },
 };

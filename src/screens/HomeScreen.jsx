@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const { recentVideos } = useContext(VideosContext);
 
   return (
-    <View className="flex-1 " style={{ backgroundColor: colors.primary }}>
+    <View className="flex-1 " style={{ backgroundColor: colors.background }}>
       <Text className="text-center text-2xl font-bold my-4 mx-5" style={{ color: colors.text }}>
         Welcome to the Video Players App
       </Text>

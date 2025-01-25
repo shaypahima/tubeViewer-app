@@ -44,6 +44,7 @@ export default function SearchScreen() {
           onSubmitEditing={() => handleSearch(keyword)}
           placeholder="Search"
           placeholderTextColor={colors.text}
+          style={{ color: colors.text }}
         />
         <Button
           title="Search"

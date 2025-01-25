@@ -28,7 +28,7 @@ export default function VideoScreen({ route }) {
   }
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.secondary }}>
+    <View className="flex-1" style={{ backgroundColor: colors.background }}>
       <Text
         className="text-2xl font-bold my-6 mx-2"
         style={{ color: colors.text }}
@@ -41,11 +41,11 @@ export default function VideoScreen({ route }) {
           videoId={videoId}
         />
       </View>
-      <Text className="text-lg font-bold mb-4" style={{ color: colors.text }}>
+      <Text className="text-lg font-bold m-3" style={{ color: colors.text }}>
         Description
       </Text>
-      <Text className="text-sm mb-4" style={{ color: colors.text }}>
-        {description}
+      <Text className="text-sm mb-4 mx-2" style={{ color: colors.text }}>
+        {description.trim() === "" ? "No description available" : description}
       </Text>
       <Button
         className="my-6 mx-5"

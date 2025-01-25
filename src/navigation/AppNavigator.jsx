@@ -5,19 +5,21 @@ import VideoScreen from "../screens/VideoScreen";
 import SearchScreen from "../screens/SearchScreen";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
+import ThemeSwitch from "../components/ThemeSwitch";
 
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
-  const { theme, toggleTheme, colors } = useContext(ThemeContext);
+  const { colors } = useContext(ThemeContext);
 
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: colors.primary },
+          headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text,
+          headerRight: () => <ThemeSwitch />,
         }}
       >
         <Stack.Screen

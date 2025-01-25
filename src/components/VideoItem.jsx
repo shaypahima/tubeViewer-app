@@ -27,7 +27,7 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
       className="flex-row items-center space-x-4 p-4 border-b "
       style={{
         borderBottomColor: colors.secondary,
-        backgroundColor: colors.background,
+        backgroundColor: colors.secondary,
       }}
       onPress={handlePress}
     >
