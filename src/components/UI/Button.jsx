@@ -29,7 +29,7 @@ export default function Button({
 
       onPress={onPress}
       disabled={disabled}
-      className={`px-4 py-2 rounded-lg bg-${getBackgroundColor()} ${
+      className={`px-4 py-2 bg-${getBackgroundColor()} ${
         disabled ? "opacity-50" : ""
       } border border-${getBackgroundColor()} rounded-lg ${className}`}
     >

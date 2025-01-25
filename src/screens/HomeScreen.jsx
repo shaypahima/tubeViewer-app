@@ -6,6 +6,7 @@ import Button from '../components/UI/Button';
 import { VideosContext } from '../contexts/videosContext';
 import VideoItem from '../components/VideoItem';
 
+
 export default function HomeScreen() {
   const navigation = useNavigation();
   const { colors } = useContext(ThemeContext);
@@ -13,7 +14,7 @@ export default function HomeScreen() {
   const { recentVideos } = useContext(VideosContext);
 
   return (
-    <View className="flex-1 " style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 " style={{ backgroundColor: colors.primary }}>
       <Text className="text-center text-2xl font-bold my-4 mx-5" style={{ color: colors.text }}>
         Welcome to the Video Players App
       </Text>

@@ -12,7 +12,7 @@ export default function VideoScreen({ route }) {
   const { title, description, videoId } = video;
   const navigation = useNavigation();
 
-  // Check for missing parameters and navigate back if any are missing
+  // check for missing parameters and navigate back if any are missing
   if (!title || !videoId) {
     return (
       <View className="flex-1 items-center justify-center">
@@ -21,6 +21,7 @@ export default function VideoScreen({ route }) {
           title="Go Back"
           onPress={() => navigation.goBack()}
           variant="secondary"
+          className="my-6 mx-5"
         />
       </View>
     );

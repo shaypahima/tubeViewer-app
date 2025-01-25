@@ -52,7 +52,7 @@ export default function SearchScreen() {
         />
       </View>
 
-      {isLoading && <Text style={{ color: colors.text }}>Loading...</Text>}
+      {isLoading && <Text className="text-center text-lg my-4 mx-5" style={{ color: colors.text }}>Loading...</Text>}
       {error && (
         <View className="mb-4">
           <Text style={{ color: colors.text }}>Error: {error.message}</Text>
