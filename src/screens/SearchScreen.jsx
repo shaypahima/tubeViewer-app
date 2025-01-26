@@ -64,11 +64,10 @@ export default function SearchScreen() {
     }
     refetch();
   };
-  console.log({...error}.message, "error");
   if (error) {
     return (
       <View
-        style={{ backgroundColor: colors.secondary }}
+        style={{ backgroundColor: colors.background }}
         className="flex-1 justify-center items-center "
       >
         <View className="flex-1 p-4" >
@@ -95,7 +94,7 @@ export default function SearchScreen() {
   }
 
   return (
-    <View className="flex-1 p-4" style={{ backgroundColor: colors.secondary }}>
+    <View className="flex-1 p-4" style={{ backgroundColor: colors.background }}>
       <View
         className="flex-row items-center p-2 mt-4 rounded-lg shadow-md"
         style={{

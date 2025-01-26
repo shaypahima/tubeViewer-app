@@ -26,7 +26,7 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
   return (
     <TouchableOpacity 
       activeOpacity={1}
-      className="flex-row items-center  p-4 mb-1 rounded-lg"
+      className="flex-row items-center  p-4 mb-1 rounded-md"
       style={{
         backgroundColor: colors.accent,
       }}

@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { VideosContext } from "../contexts/videosContext";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { ThemeContext } from "../contexts/themeContext";
 
 export default function VideoItemActions({ data, isFavorite, video, rowMap }) {
+  const { colors } = useContext(ThemeContext);
 
   const handleCloseRow = () => {
     rowMap[video.videoId].closeRow();
@@ -19,7 +20,7 @@ export default function VideoItemActions({ data, isFavorite, video, rowMap }) {
           handleCloseRow()
           deleteFavorite(video.videoId)
           rowMap[video.videoId].closeRow()
-        }} className="bg-gray-500 rounded-md " >
+        }} style={{ backgroundColor: colors.disabled }} className="rounded-md " >
           <Text className='p-4'> {<Ionicons name="heart-dislike" size={52} className="w-56 h-56" color="white" />} </Text>
         </TouchableOpacity>
       </View>
@@ -31,8 +32,7 @@ export default function VideoItemActions({ data, isFavorite, video, rowMap }) {
       <TouchableOpacity disabled={isFavoritesFull} onPress={() => {
         handleCloseRow() 
         addFavorite(video)
-        
-        }} className="bg-blue-500 rounded-md " >
+        }} style={{ backgroundColor: colors.success }} className="rounded-md " >
         <Text className='p-4'> {<Ionicons name="heart" size={52} className="w-56 h-56" color="white" />} </Text>
       </TouchableOpacity>
       <TouchableOpacity 
@@ -41,7 +41,7 @@ export default function VideoItemActions({ data, isFavorite, video, rowMap }) {
         deleteRecentVideo(video.videoId)
         rowMap[video.videoId].closeRow()
       }}
-      className="bg-red-500 rounded-md " >
+      style={{ backgroundColor: colors.alert }} className="rounded-md " >
         <Text className='p-4'>{<Ionicons name="trash" size={52} color="white" />}</Text>
       </TouchableOpacity>
     </View>
