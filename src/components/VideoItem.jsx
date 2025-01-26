@@ -9,7 +9,7 @@ import { VideosContext } from "../contexts/videosContext";
 export default function VideoItem({ video, addToRecentVideos = false }) {
   const { colors } = useContext(ThemeContext);
   // add the video to the recent videos list
-  const { addVideo, deleteVideo } = useContext(VideosContext);
+  const { addRecentVideo } = useContext(VideosContext);
   // get the title and thumbnail of the video
   const { title, thumbnail } = video;
 
@@ -18,16 +18,17 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
   // if addToRecentVideos is true, add the video to the recent videos list
   const handlePress = () => {
     if(addToRecentVideos){
-      addVideo(video);
+      addRecentVideo(video);
     }
     navigation.navigate('Video', { video }); // navigate to the video screen
   };
 
   return (
     <TouchableOpacity 
-      className="flex-row items-center space-x-4 p-4 border-b "
+      activeOpacity={1}
+      className="flex-row items-center  p-4 mb-1 rounded-lg"
       style={{
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.accent,
       }}
       onPress={handlePress}
     >
@@ -40,7 +41,7 @@ export default function VideoItem({ video, addToRecentVideos = false }) {
         }}
       />
       <Text
-        className="ml-4 text-lg font-medium"
+        className="ml-4 text-lg font-medium w-3/4"
         style={{
           color: colors.text,
         }}

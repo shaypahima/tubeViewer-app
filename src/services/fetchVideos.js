@@ -2,31 +2,40 @@ import axios from 'axios';
 import { config } from '../../config';
 
 
-export const fetchYouTubeVideos = async (keyword) => {
+export const fetchYouTubeVideos = async (query, pageToken) => {
   try {
+    const params = {
+      key: config.API_KEY,
+      q: query,
+      part: 'snippet',
+      type: 'video',
+      maxResults: 10,
+    }
+    if(pageToken){
+      params.pageToken = pageToken;
+    }
+
     // fetch the videos from the youtube api
     const response = await axios.get(config.BASE_URL, {
-      params: {
-        key: config.API_KEY,
-        q: keyword,
-        part: 'snippet',
-        type: 'video',
-        maxResults: 10
-      }
+      params: params
     })
     
     const videos = response.data.items;
 
     // Map video details into a readable format
-    return videos.map((video) => ({
-      title: video.snippet.title,
-      description: video.snippet.description,
-      videoId: video.id.videoId,
-      thumbnail: video.snippet.thumbnails.high.url,
-    }));
+    return {
+      results: videos.map((video) => ({
+        title: video.snippet.title,
+        description: video.snippet.description,
+        videoId: video.id.videoId,
+        thumbnail: video.snippet.thumbnails.high.url,
+      })),
+      nextPageToken: response.data.nextPageToken,
+      prevPageToken: response.data.prevPageToken
+    };
   } catch (error) {
     console.error('Error fetching YouTube videos:', error);
-    return [];
+    throw error;
   }
 
 }

@@ -22,8 +22,9 @@ export const ThemeProvider = ({ children }) => {
 
   const toggleTheme = async () => {
     // toggle the theme and save it to the async storage
-    theme === "light" ? setTheme("dark") : setTheme("light");
-    await AsyncStorage.setItem("theme", theme);
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    await AsyncStorage.setItem("theme", newTheme);
   };
 
   return (

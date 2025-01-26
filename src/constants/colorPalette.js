@@ -14,3 +14,8 @@ export const colorPalettes = {
     accent: '#f40b3f',
   },
 };
+
+export const gradientColors = {
+  light: ['#f3e2e5', '#e96d88'],
+  dark: ['#1c0c0f', '#931632'],
+};

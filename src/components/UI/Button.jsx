@@ -3,7 +3,7 @@ import { ThemeContext } from "../../contexts/themeContext";
 import { useContext } from "react";
 
 export default function Button({
-  className,
+  className = "",
   title,
   onPress,
   variant = "primary",

@@ -1,9 +1,11 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import Button from "../components/UI/Button";
+import { VideosContext } from "../contexts/videosContext";
+import { Ionicons } from "@expo/vector-icons";
 
 
 export default function VideoScreen({ route }) {
@@ -11,6 +13,9 @@ export default function VideoScreen({ route }) {
   const { video } = route.params;
   const { title, description, videoId } = video;
   const navigation = useNavigation();
+  const { favorites, addFavorite, deleteFavorite } = useContext(VideosContext);
+
+  const isFavorite = favorites.some(favorite => favorite.videoId === videoId);
 
   // check for missing parameters and navigate back if any are missing
   if (!title || !videoId) {
@@ -44,9 +49,22 @@ export default function VideoScreen({ route }) {
       <Text className="text-lg font-bold m-3" style={{ color: colors.text }}>
         Description
       </Text>
-      <Text className="text-sm mb-4 mx-2" style={{ color: colors.text }}>
+      <View className="flex-row justify-between ">
+      <Text className="text-sm mb-4 mx-2 max-w-[200px]" style={{ color: colors.text }}>
         {description.trim() === "" ? "No description available" : description}
       </Text>
+      <TouchableOpacity className=" rounded-full   mx-10" onPress={() => {
+        if(isFavorite){
+          deleteFavorite(videoId)
+        }else{
+          addFavorite(video)
+        }
+      }}>
+        <Ionicons name={isFavorite ? "heart-dislike-circle-sharp" : "heart-circle-sharp"} size={56} color={colors.text} />
+      </TouchableOpacity>
+      </View>
+
+
       <Button
         className="my-6 mx-5"
         title="Back to the Home Screen"
