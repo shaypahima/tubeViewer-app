@@ -1,5 +1,5 @@
 export const config = {
-  API_KEY: "AIzaSyBe7fUMhZ5ml1Cu4JdBC0CVGtNK-8j-kBo",
+  API_KEY: "AIzaSyBrXdOuauqi7roJiYQFPk06E7sw1t6OWVw",
   BASE_URL: "https://www.googleapis.com/youtube/v3/search"
 }
 

@@ -1,89 +1,79 @@
+import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList, TextInput, Keyboard } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { fetchYouTubeVideos } from "../services/fetchVideos";
-import VideoItem from "../components/VideoItem";
-import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "../contexts/themeContext";
+
+import VideoItem from "../components/VideoItem";
 import Button from "../components/UI/Button";
 import Pagination from "../components/UI/Pagination";
 
 export default function SearchScreen() {
-  // state to store the search data
-  const [searchData, setSearchData] = useState({
-    query: "",
-    nextPageToken: null,
-    prevPageToken: null,
-    targetPageToken: null,
-    currentPage: 1,
-  });
-
   const { colors } = useContext(ThemeContext);
+  
+  // states
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [targetPageToken, setTargetPageToken] = useState(null);
 
-  // fetch the videos from the youtube api
+  // fetch data
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["search-results", searchData.query, searchData.targetPageToken],
-    queryFn: () =>
-      fetchYouTubeVideos(searchData.query, searchData.targetPageToken),
+    queryKey: ["search-results", query, targetPageToken],
+    queryFn: fetchYouTubeVideos,
     enabled: false, // disable automatic fetching
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
-  // handle the search
+  // re-fetch when pagination changes
+  useEffect(() => {
+    // only refetch if we actually have a query
+    if (query.trim()) {
+      refetch();
+    }
+  }, [targetPageToken]);
+
+  // handle search
   const handleSearch = () => {
     Keyboard.dismiss();
-    if (searchData.query.trim()) {
-      setSearchData({
-        ...searchData,
-        currentPage: 1,
-        nextPageToken: null,
-        prevPageToken: null,
-        targetPageToken: null,
-      });
-      console.log(searchData, "searchData");
-      console.log(data, "data");
+    if (query.trim()) {
       refetch();
     }
   };
 
-  // handle the pagination
+  // handle pagination
   const handlePagination = (direction) => {
-    if (direction === "next" && searchData.nextPageToken) {
-      setSearchData({
-        ...searchData,
-        currentPage: searchData.currentPage + 1,
-        targetPageToken: searchData.nextPageToken,
-      });
+    if (direction === "next" && data?.nextPageToken) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      setTargetPageToken(data.nextPageToken);
+    } else if (direction === "prev" && data?.prevPageToken && currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      setTargetPageToken(data.prevPageToken);
     }
-    if (direction === "prev" && searchData.prevPageToken) {
-      setSearchData({
-        ...searchData,
-        currentPage: searchData.currentPage - 1,
-        targetPageToken: searchData.prevPageToken,
-      });
-    }
-    refetch();
   };
+
+  // handle errors
   if (error) {
     return (
       <View
         style={{ backgroundColor: colors.background }}
-        className="flex-1 justify-center items-center "
+        className="flex-1 justify-center items-center"
       >
-        <View className="flex-1 p-4" >
+        <View className="flex-1 p-4">
           <Text
-
             style={{ color: colors.text }}
             className="p-4 text-lg font-bold"
           >
             Something went wrong...
           </Text>
           <Text style={{ color: colors.text }} className="items-start">
-           {error.message}
+            {error.message}
           </Text>
           <Button
             title="Try Again"
-            onPress={() => setSearchData({ ...searchData, query: "" })}
+            onPress={() => {
+              setQuery("");
+              refetch();
+            }}
             variant="secondary"
             disabled={isLoading}
             className="my-4 mx-5"
@@ -94,7 +84,7 @@ export default function SearchScreen() {
   }
 
   return (
-    <View className="flex-1 p-4" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 p-4" style={{ backgroundColor: colors.secondary }}>
       <View
         className="flex-row items-center p-2 mt-4 rounded-lg shadow-md"
         style={{
@@ -105,9 +95,9 @@ export default function SearchScreen() {
         <TextInput
           className="flex-1 p-3 text-base rounded-l-lg"
           returnKeyType="search"
-          value={searchData.query}
-          onChangeText={(text) => setSearchData({ ...searchData, query: text })}
-          onSubmitEditing={() => handleSearch(searchData.query)}
+          value={query}
+          onChangeText={setQuery}
+          onSubmitEditing={handleSearch}
           placeholder="Search"
           placeholderTextColor={colors.text}
           style={{ color: colors.text }}
@@ -128,6 +118,7 @@ export default function SearchScreen() {
           Loading...
         </Text>
       )}
+
       {data?.results && (
         <View className="flex-1">
           <FlatList
@@ -139,9 +130,12 @@ export default function SearchScreen() {
               <VideoItem video={item} addToRecentVideos={true} />
             )}
           />
+
           <Pagination
-            currentPage={searchData.currentPage}
+            currentPage={currentPage}
             onPageChange={handlePagination}
+            nextPage={data.nextPageToken}
+            prevPage={data.prevPageToken}
           />
         </View>
       )}

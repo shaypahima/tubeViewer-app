@@ -15,7 +15,7 @@ export default function VideoItemActions({ data, isFavorite, video, rowMap }) {
 
   if(isFavorite){
     return(
-      <View className="flex-row justify-end space-x-4">
+      <View className="flex-row  space-x-4">
         <TouchableOpacity onPress={() => {
           handleCloseRow()
           deleteFavorite(video.videoId)

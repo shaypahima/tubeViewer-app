@@ -1,12 +1,14 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { useContext } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useContext, forwardRef } from "react";
-import { ThemeContext } from "../contexts/themeContext";
-import Button from "../components/UI/Button";
-import { VideosContext } from "../contexts/videosContext";
-import VideoItem from "../components/VideoItem";
 import { SwipeListView } from "react-native-swipe-list-view";
+
+import { ThemeContext } from "../contexts/themeContext";
+import { VideosContext } from "../contexts/videosContext";
+
+import VideoItem from "../components/VideoItem";
 import VideoItemActions from "../components/VideoItemActions";
+import Button from "../components/UI/Button";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -44,7 +46,7 @@ export default function HomeScreen() {
               keyExtractor={(item) => item.videoId}
               data={favorites}
               renderItem={(data) => <VideoItem video={data.item} />}
-              rightOpenValue={-85}
+              leftOpenValue={85}
               renderHiddenItem={(data, rowMap) => (
                 <VideoItemActions
                   data={data}

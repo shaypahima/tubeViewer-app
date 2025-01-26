@@ -2,7 +2,11 @@ import axios from 'axios';
 import { config } from '../../config';
 
 
-export const fetchYouTubeVideos = async (query, pageToken) => {
+export const fetchYouTubeVideos = async ({queryKey}) => {
+  const [_, query, pageToken] = queryKey
+  console.log(query, pageToken, "query, pageToken");
+
+  
   try {
     const params = {
       key: config.API_KEY,
