@@ -4,9 +4,7 @@ import { config } from '../../config';
 
 export const fetchYouTubeVideos = async ({queryKey}) => {
   const [_, query, pageToken] = queryKey
-  console.log(query, pageToken, "query, pageToken");
 
-  
   try {
     const params = {
       key: config.API_KEY,
@@ -26,7 +24,7 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
     
     const videos = response.data.items;
 
-    // Map video details into a readable format
+    // map video details into a readable format
     return {
       results: videos.map((video) => ({
         title: video.snippet.title,

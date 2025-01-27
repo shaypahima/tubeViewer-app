@@ -1,10 +1,10 @@
 export const colorPalettes = {
   light: {
     text: '#000000',
-    background: '#FBFBFB',
-    primary: '#C5BAFF',
-    secondary: '#C4D9FF',
-    accent: '#E8F9FF',
+    background: '#E1EACD',
+    primary: '#BAD8B6',
+    secondary: '#F9F6E6',
+    accent: '#F9F6E6',
     alert: '#D84040',
     success: '#2973B2',
     disabled: '#A5BFCC',

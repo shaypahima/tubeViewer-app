@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import YoutubePlayer from "react-native-youtube-iframe";
+import { config } from '../../config';
+
 
 import { ThemeContext } from "../contexts/themeContext";
 import { VideosContext } from "../contexts/videosContext";
@@ -16,6 +18,7 @@ export default function VideoScreen({ route }) {
   const navigation = useNavigation();
   const { favorites, addFavorite, deleteFavorite } = useContext(VideosContext);
 
+  const favoritesFull = favorites.length >= config.MAX_FAVORITE;
   const isFavorite = favorites.some((favorite) => favorite.videoId === videoId);
 
   // check for missing parameters and navigate back if any are missing
@@ -57,9 +60,16 @@ export default function VideoScreen({ route }) {
               ? "No description available"
               : description}
           </Text>
-          <TouchableOpacity
-            className=" rounded-full   mx-10"
-            onPress={() => {
+          {
+            favoritesFull && !isFavorite ? (
+              <Text className="text-sm mb-4 mx-2 max-w-[200px]" style={{ color: colors.text }}>
+                Favorite list is full. Remove a video to add a new one.
+              </Text>
+            ) : (
+              <TouchableOpacity
+                className=" rounded-full mx-10"
+                disabled={favoritesFull}
+                onPress={() => {
               if (isFavorite) {
                 deleteFavorite(videoId);
               } else {
@@ -75,6 +85,8 @@ export default function VideoScreen({ route }) {
               color={colors.text}
             />
           </TouchableOpacity>
+            )
+          }
         </View>
       </View>
 

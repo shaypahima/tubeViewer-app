@@ -1,11 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export const VideosContext = createContext();
 
 export const VideosProvider = ({ children }) => {
   const [recentVideos, setRecentVideos] = useState([]);
   const [favorites, setFavorites] = useState([]);
+
 
   // load videos from AsyncStorage when the component mounts
   useEffect(() => {

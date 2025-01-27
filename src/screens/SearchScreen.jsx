@@ -1,22 +1,45 @@
 import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList, TextInput, Keyboard } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { fetchYouTubeVideos } from "../services/fetchVideos";
-import { ThemeContext } from "../contexts/themeContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { ThemeContext } from "../contexts/themeContext";
+import { fetchYouTubeVideos } from "../services/fetchVideos";
 import VideoItem from "../components/VideoItem";
 import Button from "../components/UI/Button";
 import Pagination from "../components/UI/Pagination";
+import SearchHistory from "../components/SearchHistory";
 
 export default function SearchScreen() {
   const { colors } = useContext(ThemeContext);
-  
+
   // states
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [targetPageToken, setTargetPageToken] = useState(null);
+  const [searchHistory, setSearchHistory] = useState([]);
 
-  // fetch data
+  // load search history from storage once
+  useEffect(() => {
+    const loadSearchHistory = async () => {
+      try {
+        const storedHistory = await AsyncStorage.getItem("searchHistory");
+        if (storedHistory) {
+          setSearchHistory(JSON.parse(storedHistory));
+        }
+      } catch (error) {
+        console.error("Failed to load search history", error);
+      }
+    };
+    loadSearchHistory();
+  }, []);
+
+  // save search history whenever it changes
+  useEffect(() => {
+    AsyncStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+  }, [searchHistory]);
+
+  // React Query: fetch data
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["search-results", query, targetPageToken],
     queryFn: fetchYouTubeVideos,
@@ -24,20 +47,23 @@ export default function SearchScreen() {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
-  // re-fetch when pagination changes
+  // refetch when pagination changes, only if we have a valid query
   useEffect(() => {
-    // only refetch if we actually have a query
     if (query.trim()) {
       refetch();
     }
   }, [targetPageToken]);
 
-  // handle search
   const handleSearch = () => {
+    if (!query.trim()) return;
     Keyboard.dismiss();
-    if (query.trim()) {
-      refetch();
-    }
+    refetch();
+    // add to search history if not already present
+    setSearchHistory((prevHistory) =>
+      prevHistory.includes(query)
+        ? prevHistory
+        : [...prevHistory, query]
+    );
   };
 
   // handle pagination
@@ -51,7 +77,6 @@ export default function SearchScreen() {
     }
   };
 
-  // handle errors
   if (error) {
     return (
       <View
@@ -109,16 +134,11 @@ export default function SearchScreen() {
           disabled={isLoading}
         />
       </View>
-
       {isLoading && (
-        <Text
-          className="text-center text-lg my-4 mx-5"
-          style={{ color: colors.text }}
-        >
+        <Text className="text-center text-lg my-4 mx-5" style={{ color: colors.text }}>
           Loading...
         </Text>
       )}
-
       {data?.results && (
         <View className="flex-1">
           <FlatList
@@ -138,6 +158,18 @@ export default function SearchScreen() {
             prevPage={data.prevPageToken}
           />
         </View>
+      )}
+      {!isLoading && !data?.results && (
+        <SearchHistory
+          searchHistory={searchHistory}
+          onClearHistory={() => {
+            setSearchHistory([]);
+          }}
+          onSearchHistoryQuery={(item) => {
+            setQuery(item);
+            handleSearch(item);
+          }}
+        />
       )}
     </View>
   );
