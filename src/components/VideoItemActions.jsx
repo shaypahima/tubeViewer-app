@@ -21,6 +21,7 @@ export default function VideoItemActions({
     rowMap[video.videoId].closeRow();
   };
 
+  
 
   return (
     <View className="flex-row justify-between space-x-4">
@@ -48,6 +49,7 @@ export default function VideoItemActions({
           }{" "}
         </Text>
       </TouchableOpacity>
+      {/* when the item location is in recent videos, add the trash icon */}
       {recentVideos && (
         <TouchableOpacity
           onPress={() => {

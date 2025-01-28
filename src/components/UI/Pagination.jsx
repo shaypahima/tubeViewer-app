@@ -14,11 +14,11 @@ export default function Pagination({
   return (
     <View className="flex-row justify-around items-around p-4">
       <TouchableOpacity
-        disabled={currentPage === 1 || !prevPage}
+        disabled={!prevPage}
         onPress={() => onPageChange("prev")}
         className="p-2 rounded-md"
         style={{
-          backgroundColor: prevPage ? colors.primary : colors.disabled,
+          backgroundColor: !prevPage ? colors.disabled : colors.primary,
 
         }}
       >
@@ -35,11 +35,11 @@ export default function Pagination({
         {currentPage} / {totalPages}
       </Text>
       <TouchableOpacity
-        disabled={currentPage === totalPages || !nextPage}
+        disabled={!nextPage}
         onPress={() => onPageChange("next")}
         className="p-2 rounded-md"
         style={{
-          backgroundColor: nextPage ? colors.primary : colors.disabled,
+          backgroundColor: !nextPage ? colors.disabled : colors.primary,
         }}
       >
         <MaterialIcons

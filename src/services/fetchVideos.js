@@ -26,6 +26,7 @@ export const fetchYouTubeVideos = async ({ queryKey }) => {
     })
 
     const videos = response.data.items;
+    
     // set the total pages and limit it to the max pages
     const { totalResults, resultsPerPage } = response.data.pageInfo;
     const totalPages =

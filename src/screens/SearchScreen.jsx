@@ -152,8 +152,8 @@ export default function SearchScreen() {
             currentPage={currentPage}
             totalPages={data.totalPages}
             onPageChange={handlePagination}
-            nextPage={data.nextPageToken}
-            prevPage={data.prevPageToken}
+            nextPage={currentPage === data.totalPages ? null : data.nextPageToken}
+            prevPage={currentPage === 1 ? null : data.prevPageToken}
           />
         </View>
       )}
