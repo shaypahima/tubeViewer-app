@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { View, Text, FlatList, TextInput, Keyboard } from "react-native";
+import { View, Text, FlatList, TextInput, Keyboard, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useYouTubeSearch } from "../hooks/useYoutubeSearch";
 import { ThemeContext } from "../contexts/themeContext";
@@ -134,9 +134,7 @@ export default function SearchScreen() {
         />
       </View>
       {isLoading && (
-        <Text className="text-center text-lg my-4 mx-5" style={{ color: colors.text }}>
-          Loading...
-        </Text>
+        <ActivityIndicator size="large" color={colors.text} className="my-4 mx-5" />
       )}
       {data?.results && (
         <View className="flex-1">
@@ -152,6 +150,7 @@ export default function SearchScreen() {
 
           <Pagination
             currentPage={currentPage}
+            totalPages={data.totalPages}
             onPageChange={handlePagination}
             nextPage={data.nextPageToken}
             prevPage={data.prevPageToken}

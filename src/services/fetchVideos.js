@@ -27,6 +27,7 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
     
     const videos = response.data.items;
 
+    const {totalResults, resultsPerPage} = response.data.pageInfo;
     // map video details into a readable format
     return {
       results: videos.map((video) => ({
@@ -36,7 +37,8 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
         thumbnail: video.snippet.thumbnails.high.url,
       })),
       nextPageToken: response.data.nextPageToken,
-      prevPageToken: response.data.prevPageToken
+      prevPageToken: response.data.prevPageToken,
+      totalPages: Math.ceil(totalResults / resultsPerPage)
     };
   } catch (error) {
     console.error('Error fetching YouTube videos:', error);

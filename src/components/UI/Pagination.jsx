@@ -3,13 +3,12 @@ import { useContext } from "react";
 import { ThemeContext } from "../../contexts/themeContext";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import Button from "./Button";
-
 export default function Pagination({
   currentPage,
   onPageChange,
   nextPage,
   prevPage,
+  totalPages
 }) {
   const { colors } = useContext(ThemeContext);
   return (
@@ -33,7 +32,7 @@ export default function Pagination({
         style={{ color: colors.text }}
         className="text-center text-2xl font-bold p-2"
       >
-        {currentPage}
+        {currentPage} / {totalPages}
       </Text>
       <TouchableOpacity
         disabled={!nextPage}
