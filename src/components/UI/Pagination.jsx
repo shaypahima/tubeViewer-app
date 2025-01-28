@@ -14,7 +14,7 @@ export default function Pagination({
   return (
     <View className="flex-row justify-around items-around p-4">
       <TouchableOpacity
-        disabled={!prevPage}
+        disabled={currentPage === 1 || !prevPage}
         onPress={() => onPageChange("prev")}
         className="p-2 rounded-md"
         style={{
@@ -35,7 +35,7 @@ export default function Pagination({
         {currentPage} / {totalPages}
       </Text>
       <TouchableOpacity
-        disabled={!nextPage}
+        disabled={currentPage === totalPages || !nextPage}
         onPress={() => onPageChange("next")}
         className="p-2 rounded-md"
         style={{

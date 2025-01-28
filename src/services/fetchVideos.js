@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config.json';
 
 
-export const fetchYouTubeVideos = async ({queryKey}) => {
+export const fetchYouTubeVideos = async ({ queryKey }) => {
 
   const [_, query, pageToken] = queryKey
 
@@ -16,7 +16,7 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
       maxResults: 10,
     }
     // if there is a page token, add it to the params 
-    if(pageToken){
+    if (pageToken) {
       params.pageToken = pageToken;
     }
 
@@ -24,10 +24,12 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
     const response = await axios.get(config.BASE_URL, {
       params: params
     })
-    
-    const videos = response.data.items;
 
-    const {totalResults, resultsPerPage} = response.data.pageInfo;
+    const videos = response.data.items;
+    // set the total pages and limit it to the max pages
+    const { totalResults, resultsPerPage } = response.data.pageInfo;
+    const totalPages =
+      Math.min(Math.ceil(totalResults / resultsPerPage), config.MAX_PAGES)
     // map video details into a readable format
     return {
       results: videos.map((video) => ({
@@ -38,7 +40,7 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
       })),
       nextPageToken: response.data.nextPageToken,
       prevPageToken: response.data.prevPageToken,
-      totalPages: Math.ceil(totalResults / resultsPerPage)
+      totalPages: totalPages
     };
   } catch (error) {
     console.error('Error fetching YouTube videos:', error);

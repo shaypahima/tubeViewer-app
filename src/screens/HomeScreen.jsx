@@ -61,19 +61,13 @@ export default function HomeScreen() {
             className="text-start text-lg my-2 mx-7"
             style={{ color: colors.text }}
           >
-            No favorites videos.
+            No favorites yet.
           </Text>
           <Text
             className="text-start text-lg mx-7"
             style={{ color: colors.text }}
           >
-            Add by clicking the heart icon in the video page.
-          </Text>
-          <Text
-            className="text-start text-lg mx-7"
-            style={{ color: colors.text }}
-          >
-            or by swiping right on the video in the recent videos section.
+            Tap the heart icon on a video or swipe right in Recent Videos to add.
           </Text>
         </>
       )}

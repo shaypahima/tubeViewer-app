@@ -163,9 +163,11 @@ export default function SearchScreen() {
           onClearHistory={() => {
             setSearchHistory([]);
           }}
-          onSearchHistoryQuery={(item) => {
+          onSearchHistoryQuery={async (item) => {
             setQuery(item);
-            handleSearch(item);
+            await setTimeout(() => {
+              refetch();
+            }, 0);
           }}
         />
       )}
