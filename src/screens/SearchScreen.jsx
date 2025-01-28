@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList, TextInput, Keyboard } from "react-native";
-import { useQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useYouTubeSearch } from "../hooks/useYoutubeSearch";
 import { ThemeContext } from "../contexts/themeContext";
-import { fetchYouTubeVideos } from "../services/fetchVideos";
+
 import VideoItem from "../components/VideoItem";
 import Button from "../components/UI/Button";
 import Pagination from "../components/UI/Pagination";
@@ -40,12 +39,12 @@ export default function SearchScreen() {
   }, [searchHistory]);
 
   // React Query: fetch data
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["search-results", query, targetPageToken],
-    queryFn: fetchYouTubeVideos,
-    enabled: false, // disable automatic fetching
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  });
+  const {
+    data,
+    isLoading,
+    error,
+    refetch
+  } = useYouTubeSearch(query, targetPageToken);
 
   // refetch when pagination changes, only if we have a valid query
   useEffect(() => {

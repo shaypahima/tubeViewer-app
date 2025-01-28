@@ -13,6 +13,7 @@ import Button from "../components/UI/Button";
 export default function HomeScreen() {
   const navigation = useNavigation();
   const { colors } = useContext(ThemeContext);
+
   // get the recent videos from the videos context and the deleteAllVideos function
   const { recentVideos, favorites, deleteAllRecentVideos } =
     useContext(VideosContext);

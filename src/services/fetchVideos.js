@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { config } from '../../config';
+import config from '../../config.json';
 
 
 export const fetchYouTubeVideos = async ({queryKey}) => {
+
   const [_, query, pageToken] = queryKey
 
   try {
+    //params for the youtube api
     const params = {
       key: config.API_KEY,
       q: query,
@@ -13,6 +15,7 @@ export const fetchYouTubeVideos = async ({queryKey}) => {
       type: 'video',
       maxResults: 10,
     }
+    // if there is a page token, add it to the params 
     if(pageToken){
       params.pageToken = pageToken;
     }

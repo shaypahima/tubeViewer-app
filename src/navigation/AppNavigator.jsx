@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { ThemeContext } from "../contexts/themeContext";
+
+import ThemeSwitch from "../components/ThemeSwitch";
 import HomeScreen from "../screens/HomeScreen";
 import VideoScreen from "../screens/VideoScreen";
 import SearchScreen from "../screens/SearchScreen";
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/themeContext";
-import ThemeSwitch from "../components/ThemeSwitch";
 
 const Stack = createNativeStackNavigator();
 
